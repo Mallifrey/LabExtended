@@ -7,6 +7,8 @@ using LabExtended.API;
 using LabExtended.Events;
 
 using static LabExtended.API.Containers.SwitchContainer;
+using LabExtended.Core;
+using NetworkManagerUtils;
 
 namespace LabExtended.Patches.Functions.Players;
 
@@ -16,8 +18,7 @@ public static class RegularPlayerPatch
     public static bool JoinPrefix(ReferenceHub referenceHub)
     {
         if (referenceHub != null && !referenceHub.isLocalPlayer)
-            _ = new ExPlayer(referenceHub, referenceHub.connectionToClient.GetType() != typeof(NetworkConnectionToClient) ? GetNewNpcToggles() : GetNewPlayerToggles());
-
+            _ = new ExPlayer(referenceHub, referenceHub.connectionToClient is DummyNetworkConnection ? GetNewNpcToggles() : GetNewPlayerToggles());
         return false;
     }
     
